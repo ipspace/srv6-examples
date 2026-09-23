@@ -6,7 +6,7 @@ This repository contains _netlab_ topology files for a series of hands-on labs d
 
 See the [_How to Run the Labs_](docs/use.md) document for detailed instructions on setting up and running these labs.
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/ipspace/srv6-examples)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/ipspace/srv6-examples/tree/devc)
 
 Baseline SRv6 scenarios:
 
