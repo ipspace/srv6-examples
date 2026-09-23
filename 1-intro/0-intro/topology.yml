@@ -1,0 +1,14 @@
+message: |
+  This is the simplest SRv6 lab topology. It adds IPv6 addresses to loopback and
+  P2P links and enables IS-IS and SRv6.
+
+addressing:
+  p2p.ipv6: 2001:1::/48         # SRv6 requires ipv6 addresses on interfaces
+  loopback.ipv6: 2001:db8::/48
+
+provider: clab
+defaults.device: frr
+
+module: [ isis, srv6 ]
+nodes: [ pe1, p, pe2 ]
+links: [ pe1-p, p-pe2 ]

@@ -1,0 +1,31 @@
+message: |
+  The lab topology builds a simple SRv6-enabled network using IS-IS as the
+  routing protocol and uses the SRv6 SIDs as the next hops for IPv4 BGP routes
+  transported over an IPv6 IBGP session.
+
+addressing:                   # Modify default address pools
+  p2p:
+    ipv4: False               # ipv6-only core links
+    ipv6: True                # with LLA IPv6 addresses
+  loopback:
+    ipv4: False               # No need for ipv4 loopbacks
+    ipv6: 2001:db8::/48       # Global IPv6 loopbacks
+
+provider: clab
+defaults.device: frr
+srv6.bgp.ipv4: True           # Enable Layer-3 services for IPv4 (IPv4 islands)
+bgp.as: 65000                 # Default BGP AS number
+
+groups:                       # Define node parameters for groups of nodes
+  edge:                       # PE routers running IS-IS, SRv6, and BGP
+    members: [ pe1, pe2 ]
+    module: [ isis, srv6, bgp ]
+  core:                       # P router running just IS-IS
+    members: [ p ]
+    module: [ isis ]
+  hosts:                      # Linux hosts
+    members: [ ha, hb ]
+    device: linux
+
+nodes: [ pe1, p, pe2, ha, hb ]
+links: [ pe1-p, p-pe2, pe1-ha, pe2-hb ]

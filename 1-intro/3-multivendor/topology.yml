@@ -1,0 +1,22 @@
+message: |
+  The lab topology builds a simple SRv6-enabled network using IS-IS as the
+  routing protocol over LLA-only core links. It uses three different devices
+  to illustrate multi-vendor SRv6 interoperability.
+
+addressing:
+  p2p:
+    ipv4: False               # ipv6-only
+    ipv6: True                # Use IPv6 LLA on P2P links
+  loopback:
+    ipv4: False               # No need for ipv4 loopbacks
+    ipv6: 2001:db8::/48
+
+provider: clab
+module: [ isis, srv6 ]
+
+nodes:
+  pe1.device: frr
+  p.device: iosxr
+  pe2.device: iol
+
+links: [ pe1-p, p-pe2 ]

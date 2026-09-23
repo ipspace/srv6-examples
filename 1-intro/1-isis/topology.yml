@@ -1,0 +1,26 @@
+message: |
+  The lab topology builds a simple SRv6-enabled network using IS-IS as the
+  routing protocol. SRv6 is enabled on the edge devices; the core device runs
+  regular IPv6 forwarding.
+
+addressing:
+  p2p:
+    ipv4: False               # ipv6-only
+    ipv6: 2001:1::/48         # SRv6 requires ipv6 addresses on interfaces
+  loopback:
+    ipv4: False               # No need for ipv4 loopbacks
+    ipv6: 2001:db8::/48
+
+provider: clab
+defaults.device: frr
+
+groups:
+  edge:
+    members: [ pe1, pe2 ]
+    module: [ isis, srv6 ]
+  core:
+    members: [ p ]
+    module: [ isis ]
+
+nodes: [ pe1, p, pe2 ]
+links: [ pe1-p, p-pe2 ]

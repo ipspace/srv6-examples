@@ -1,0 +1,39 @@
+# Ignore Vagrant directories
+.vagrant
+.DS_Store
+
+# Ignore editor files
+.vscode/**
+.idea/
+
+# Ignore python virtual envs
+.venv/
+venv/
+
+# Ignore everything that should be ignored ;)
+*.ignore.*
+
+# Ignore Ansible retry and log files
+*.retry
+ansible.log
+
+# Ignore Python cache
+__pycache__
+*.pyc
+
+# Ignore Sphinx build directory
+_build
+build/
+
+# Don't publish SFTP configuration
+sftp-config.json
+
+# Ignore netlab-created files
+group_vars/
+host_vars/
+hosts.yml
+clab.yml
+ansible.cfg
+Vagrantfile
+node_files/
+*.pickle

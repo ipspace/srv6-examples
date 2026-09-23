@@ -1,0 +1,38 @@
+message: |
+  The lab topology builds a simple SRv6-enabled network using IS-IS as the
+  routing protocol running over IPv6 LLA links. It uses the SRv6 SIDs to build
+  an IPv4 L3VPN across the IPv6 transport core.
+
+addressing:
+  p2p:
+    ipv4: False               # ipv6-only core links
+    ipv6: True                # with LLA IPv6 addresses
+  loopback:
+    ipv4: False               # No need for ipv4 loopbacks
+    ipv6: 2001:db8::/48
+
+provider: clab
+defaults.device: frr
+
+bgp.as: 65000
+srv6.vpn.ipv4: True
+
+groups:
+  _auto_create: True
+  core:
+    members: [ p ]
+    module: [ isis ]
+  edge:
+    members: [ pe1, pe2 ]
+    module: [ isis, bgp, srv6, vrf ]
+  hosts:
+    members: [ ha, hb ]
+    device: linux
+
+vrfs:
+  tenant:
+    links: [ ha-pe1, hb-pe2 ]
+
+links:
+- group: core
+  members: [ pe1-p, p-pe2 ]

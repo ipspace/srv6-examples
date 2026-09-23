@@ -1,0 +1,34 @@
+message: |
+  The lab topology builds a simple SRv6-enabled network using IS-IS as the
+  routing protocol and uses the SRv6 SIDs as the next hops to build a BGP-free
+  IPv6 network core.
+
+addressing:
+  p2p:
+    ipv4: False               # ipv6-only core links
+    ipv6: True                # with LLA IPv6 addresses
+  loopback:
+    ipv4: False               # No need for ipv4 loopbacks
+    ipv6: 2001:db8::/48
+  lan:
+    ipv4: False               # No IPv4 on edge links
+    ipv6: 2001:db8:cafe::/48  # IPv6 LAN prefix pool
+
+provider: clab
+defaults.device: frr
+srv6.bgp.ipv6: True           # Enable Layer-3 services for IPv6 (BGP-free IPv6 core)
+bgp.as: 65000
+
+groups:
+  edge:
+    members: [ pe1, pe2 ]
+    module: [ isis, srv6, bgp ]
+  core:
+    members: [ p ]
+    module: [ isis ]
+  hosts:
+    members: [ ha, hb ]
+    device: linux
+
+nodes: [ pe1, p, pe2, ha, hb ]
+links: [ pe1-p, p-pe2, pe1-ha, pe2-hb ]
